@@ -1,0 +1,6 @@
+﻿  IndoorChem.cpp
+C:\Dissertation\chemistry\IndoorChem\IndoorChem\IndoorChem\IndoorChem.cpp(26,27): warning C4018: '<': signed/unsigned mismatch
+C:\Dissertation\chemistry\IndoorChem\IndoorChem\IndoorChem\IndoorChem.cpp(97,27): warning C4018: '<': signed/unsigned mismatch
+C:\Dissertation\chemistry\IndoorChem\IndoorChem\IndoorChem\IndoorChem.cpp(504,27): warning C4018: '<': signed/unsigned mismatch
+C:\Dissertation\chemistry\IndoorChem\IndoorChem\IndoorChem\IndoorChem.cpp(520,23): warning C4018: '<': signed/unsigned mismatch
+  IndoorChem.vcxproj -> C:\Dissertation\chemistry\IndoorChem\IndoorChem\Debug\IndoorChem.exe

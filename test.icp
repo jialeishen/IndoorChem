@@ -1,0 +1,282 @@
+! Project information
+Project,
+	IndoorChem,			! Solver name, [IndoorChem]
+	1.0,				! Solver version, [1.0] or newer
+	test.icp,			! Filename of the IndoorChem project (.icp), [xxx.icp]
+	single,				! Simulation type, [single] or [multizone]. For multizone simulation, a co-simulation with CONTAM will be performed
+	steady;				! Simulation time, [steady] or [transient]
+	
+! Simulation setting
+RunPeriod,
+	1,					! Start month
+	1,					! Start day
+	12,					! End month
+	31,					! End day
+	24,					! Number of timesteps per day (24 hours)
+	240;				! Number of timesteps per hour (60 min * 4 steps/min)
+	
+! Room configuration
+Room,
+	test_room, 			! Room name
+	r_0,				! Room ID (All IDs start from 0)
+	general,			! Room type, [general], [office], [classroom], ...
+	60,					! Room volume, m3
+	6,					! Surface number, #
+	1,					! Occupant number, #
+	3,					! Furniture number, #
+	1,					! AHU number, # (1: with AHU, 0: without AHU)
+	2,					! Air cleaner number, #
+	6;					! Pollutant of concern (POCs) number
+
+! Surface configuration (wall surfaces)
+Surface,
+	floor,				! Surface name
+	s_0,				! Surface ID
+	r_0,				! Related room ID
+	0,					! Angle, degree
+	20,					! Surface area
+	carpet,				! Material
+	20,					! Surface temperature
+	0.1;				! Surface airflow velocity, m/s
+	
+Surface,
+	wall_1,				! Surface name
+	s_1,				! Surface ID
+	r_0,				! Related room ID
+	90,					! Angle, degree
+	12,					! Surface area
+	gypsum_painted,		! Material
+	20,					! Surface temperature
+	0.1;				! Surface airflow velocity, m/s
+
+Surface,
+	wall_2,				! Surface name
+	s_2,				! Surface ID
+	r_0,				! Related room ID
+	90,					! Angle, degree
+	15,					! Surface area
+	gypsum_painted,		! Material
+	20,					! Surface temperature
+	0.1;				! Surface airflow velocity, m/s
+	
+Surface,
+	wall_3,				! Surface name
+	s_3,				! Surface ID
+	r_0,				! Related room ID
+	90,					! Angle, degree
+	12,					! Surface area
+	gypsum_painted,		! Material
+	20,					! Surface temperature
+	0.1;				! Surface airflow velocity, m/s
+	
+Surface,
+	wall_4,				! Surface name
+	s_4,				! Surface ID
+	r_0,				! Related room ID
+	90,					! Angle, degree
+	15,					! Surface area
+	gypsum_painted,		! Material
+	20,					! Surface temperature
+	0.1;				! Surface airflow velocity, m/s
+	
+Surface,
+	ceiling,			! Surface name
+	s_5,				! Surface ID
+	r_0,				! Related room ID
+	90,					! Angle, degree
+	20,					! Surface area
+	gypsum_painted,		! Material
+	20,					! Surface temperature
+	0.1;				! Surface airflow velocity, m/s
+
+! Occupant configuration
+Occupant,
+	occupant_1,			! Occupant name
+	o_0,				! Occupant ID
+	r_0,				! Related room ID
+	m,					! Gender (m(ale), f(emale), u(nspecified))
+	adult,				! Age group (kid, adult, elderly)
+	schd_clo_0,			! Clothing schedule --> determining the exposed skin area and clothes area (unit: clo from ASHRAE)
+	schd_occ_0,			! Occupant activity schedule --> activity level, will determine the emission from the subject, and also exposure (respiratory activities)
+	skin-oil;			! Surface material
+	
+! Furniture configuration
+Furniture,
+	desk_1,				! Furniture name
+	f_0,				! Furniture ID
+	r_0,				! Related room ID
+	0,					! Angle, degree
+	1.5,				! Surface area
+	wood,				! Material
+	20,					! Surface temperature
+	0.1;				! Surface airflow velocity, m/s
+
+! Outdoor infiltration
+Inf_out,
+	0.1,				! Infiltration rate
+	1,					! Leakage area per surface area (cm2/m2) --> depends on the specific calculation method
+	1;					! Parameter related to other methods
+
+! Interzone infiltration
+Inf_inter,
+	0.1,				! Infiltration rate
+	1;					! Other potential parameters
+
+! AHU configuration
+AHU,
+	AHU_0,				! AHU name
+	ahu_0,				! AHU ID
+	r_0,				! Realated room ID
+	100,				! Supply air flow rate (m3/h) (max)
+	0.6,				! Recirculated air ratio
+	0.1,				! Single-pass removal efficiency for POC 1
+	0,					! Single-pass removal efficiency for POC 2
+	0,					! Single-pass removal efficiency for POC 3
+	0,					! Single-pass removal efficiency for POC 4
+	0,					! Single-pass removal efficiency for POC 5
+	0.5,				! Single-pass removal efficiency for POC 6
+	,					! CADR for POC 1 (equivalent CADR)
+	,					! CADR for POC 2
+	,					! CADR for POC 3
+	,					! CADR for POC 4
+	,					! CADR for POC 5
+	,					! CADR for POC 6
+	0,					! Generation rate for POC 1 (secondary emission of using air cleaner)
+	0,					! Generation rate for POC 2
+	0,					! Generation rate for POC 3
+	0,					! Generation rate for POC 4
+	0,					! Generation rate for POC 5
+	0,					! Generation rate for POC 6
+	schd_ahu_0;			! Schedule name or a contant number indicating the working efficiency over the entire period (0.0 to 1.0)
+	
+
+! Air cleaner configuration
+AirCleaner,
+	Carbon_MERV8,		! Air cleaner name
+	ac_0,				! Air cleaner ID
+	r_0,				! Related room ID
+	500,				! Airflow rate
+	0.1,				! Single-pass removal efficiency for POC 1
+	0,					! Single-pass removal efficiency for POC 2
+	0,					! Single-pass removal efficiency for POC 3
+	0,					! Single-pass removal efficiency for POC 4
+	0,					! Single-pass removal efficiency for POC 5
+	0.5,				! Single-pass removal efficiency for POC 6
+	,					! CADR for POC 1 (equivalent CADR)
+	,					! CADR for POC 2
+	,					! CADR for POC 3
+	,					! CADR for POC 4
+	,					! CADR for POC 5
+	,					! CADR for POC 6
+	0,					! Generation rate for POC 1 (secondary emission of using air cleaner)
+	0,					! Generation rate for POC 2
+	0,					! Generation rate for POC 3
+	0,					! Generation rate for POC 4
+	0,					! Generation rate for POC 5
+	0,					! Generation rate for POC 6
+	schd_ac_0;			! Schedule name or a contant number indicating the working efficiency over the entire period (0.0 to 1.0)
+	
+! Air cleaner configuration
+AirCleaner,
+	UV_HEPA,			! Air cleaner name
+	ac_1,				! Air cleaner ID
+	r_0,				! Related room ID
+	500,				! Airflow rate
+	0,					! Single-pass removal efficiency for POC 1
+	0,					! Single-pass removal efficiency for POC 2
+	0,					! Single-pass removal efficiency for POC 3
+	0,					! Single-pass removal efficiency for POC 4
+	0,					! Single-pass removal efficiency for POC 5
+	0.99,				! Single-pass removal efficiency for POC 6
+	,					! CADR for POC 1 (equivalent CADR)
+	,					! CADR for POC 2
+	,					! CADR for POC 3
+	,					! CADR for POC 4
+	,					! CADR for POC 5
+	,					! CADR for POC 6
+	10,					! Generation rate for POC 1 (secondary emission of using air cleaner)
+	0,					! Generation rate for POC 2
+	0,					! Generation rate for POC 3
+	0,					! Generation rate for POC 4
+	0,					! Generation rate for POC 5
+	0,					! Generation rate for POC 6
+	schd_ac_1;			! Schedule name
+	
+! Schedule of different activities
+Schedule,
+	schd_ac_0,			! Schedule name
+	sch_0,				! Schedule ID
+	0,					! Controlled, indicating if the schedule is under certain control strategy (1: true, 0: false)
+	...					! hourly data? maybe we can take the schedule template from eplus as the example
+	
+	
+Schedule,
+	schd_clo_0,			! Schedule name
+	...
+
+! Pollutants of concern (POCs) --> pollutants in the air (surface pollutants are not considered)
+POC,
+	ozone,
+	formaldehyde,
+	acetone,
+	toluene,
+	nonenal,
+	particle;
+
+! Pollutants on surfaces --> the pollutants on surfaces and humans will not be included for calculating their own concentrations. They are only considered for removing POCs and generate POCs as secondary emissions.
+POS,
+	carpet,				! surface materials maintain a constant concentration level over the period, ageing and regeneration effects are not considered yet
+	wood,				! should be an element from the material list
+	...;
+
+! Pollutants on human-related surfaces
+POH,
+	skin-oil,			! should be an element from the material list
+	...;
+
+! Chemistry configuration --> we can predefine chemical reactions in the program, but can also provide the interface for users to input/define their reactions
+Chemistry,
+	Reactant: ozone, 
+	Reactant: skin-oil,
+	Product: formaldehyde,
+	Product: acetone;
+	Removal: 0.1,		! Removal rate of Reactant 1: ozone (deposition velocity)
+	Removal: 0,			! Removal rate of Reactant 2: skin-oil --> maintain a constant level over simulation
+	Yield: 0.1,			! Yield rate of Product 1: formaldehyde
+	Yield: 0.2;			! Yield rate of Product 2: acetone
+	
+Chemistry,
+	Reactant: ozone, 
+	Reactant: carpet,
+	Product: formaldehyde,
+	Product: acetone,
+	Product: toluene,
+	Product: nonenal,
+	Removal: 0.1,		! Removal rate of Reactant 1
+	Removal: 0,			! Removal rate of Reactant 2
+	Yield: 0.1,			! Yield rate of Product 1
+	Yield: 0.2,			! Yield rate of Product 2
+	Yield: 0.3,			! Yield rate of Product 3
+	Yield: 0.4;			! Yield rate of Product 4
+	
+Chemistry,
+	Reactant: ozone, 	! if no products presented, the reaction is considered for passive removal/deposition
+	Reactant: wood,
+	Removal: 0.1,		! Removal rate of Reactant 1
+	Removal: 0;			! Removal rate of Reactant 2
+	
+Chemistry,
+	Reactant: ozone, 	
+	Product: toluene,	! if the detailed reaction is unknown (e.g. ozone + X --> toluene + Y), and the other chemicals are not important and considered by this model. Then X and Y can be ignored, only present POCs.
+	Removal: 0.1,		! Removal rate of Reactant 1
+	Yield: 0.3;			! Removal rate of Reactant 2
+	
+Chemistry,
+	Reactant: wood, 	
+	Product: formaldehyde,	
+	Yield: 0.3;			! Primary emission from a certain material
+	
+
+	
+
+
