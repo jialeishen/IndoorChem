@@ -18,12 +18,15 @@ public:
     Room(vector<string> vec);
     //Room(const Room& r);
     ~Room();
-    vector<Surface>* surfaces;
-
+    //Surface* surfaces[100];
+    ////vector<Surface*> surfaces;
+    //void setSurface(Surface *s);
+    //int num_surface = 0;
     string name;
     string id;
     string type;
     double volume = 0;
+    int pollutant_num = 0;
 
 
 };

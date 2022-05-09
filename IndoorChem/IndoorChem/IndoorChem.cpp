@@ -20,22 +20,24 @@ namespace constant
 
 namespace process
 {
-    Room find_room(vector<Room> rooms, string id)
-    {
-        Room r;
-        for (int i = 0; i < rooms.size(); i++)
-        {
-            if (rooms[i].id == id)
-            {
-                r = rooms[i];
-            }
-            else
-            {
-                cout << "Cannot find the room with the specific ID from the current room list." << endl;
-            }
-        }
-        return r;
-    }
+    //int find_room(Room* rooms[100], string id)//(vector<Room*> rooms, string id)
+    //{
+    //    for (int i = 0; i < sizeof(rooms); i++)
+    //    {
+    //        cout << "inside find_room: " << endl;
+    //        cout << rooms[i]->id << endl;
+    //        cout << &rooms[i] << endl;
+    //        if (rooms[i]->id == id)
+    //        {
+    //            return i;
+    //        }
+    //        else
+    //        {
+    //            cout << "Cannot find the room with the specific ID from the current room list." << endl;
+    //            return -1;
+    //        }
+    //    }
+    //}
 
     int get_days(int m1, int d1, int m2, int d2)
     {
@@ -110,6 +112,19 @@ namespace process
         return str;
     }
 
+    /*vector<string&> remove_delimiters(vector<string&> str)
+    {
+        for (int i = 0; i < str.size(); i++)
+        {
+            if (ends_with(str[i], ",") or ends_with(str[i], ";"))
+            {
+                str.pop_back();
+            }
+        }
+        
+        return str;
+    }*/
+
     vector<int> get_indices(vector<string> vec, string element)
     {
         vector<int> indices;
@@ -159,6 +174,7 @@ Room::Room(vector<string> vec)
     id = vec[1];
     type = vec[2];
     volume = stod(vec[3]);
+    pollutant_num = stoi(vec[9]);
 }
 
 //Room(const Room& r)
@@ -170,6 +186,13 @@ Room::~Room()
 {
 
 }
+
+//void Room::setSurface(Surface* s)
+//{
+//    surfaces[num_surface] = s;
+//    num_surface += 1;
+//    //surfaces.push_back(s);
+//}
 
 //void Room::setSurface(vector<Surface> &sur)
 //{
@@ -207,7 +230,7 @@ class Material
 public:
     Material();
     ~Material();
-    string name = "testtesttest";
+    string name = "gypsum";
 };
 
 Material::Material()
@@ -230,12 +253,12 @@ Surface::Surface(vector<string> vec)
 {
     name = vec[0];
     id = vec[1];
-    /*room_id = vec[2];
+    room_id = vec[2];
     angle = stod(vec[3]);
     area = stod(vec[4]);
     material_name = vec[5];
     temperature = stod(vec[6]);
-    airflow = stod(vec[7]);*/
+    airflow = stod(vec[7]);
 
 }
 
@@ -255,11 +278,28 @@ Surface::~Surface()
 //    //room->surfaces->push_back(&this);
 //}
 //
-void Surface::setRoom(vector<Room> rs)
-{
-    //room = &process::find_room(rs, id);
-    //room->surfaces->push_back(this);
-}
+//void Surface::setRoom(Room* rs[100]) //(vector<Room*> rs)
+//{
+//    cout << "room id: " << room_id << endl;
+//    cout << "input room id: " << rs[0]->id << endl;
+//
+//    int index;
+//    index = process::find_room(rs, room_id);
+//
+//    room = rs[index];
+//    cout << "index: " << index << endl;
+//    cout << rs[index]->name << endl;
+//    cout << room->name << endl;
+//    cout << &room << endl;
+//    cout << room->id << endl;
+//
+//    room->setSurface(this);
+//
+//    //rs[index].surfaces.push_back(this);
+//    //room->surfaces.push_back(this);
+//
+//    cout << "Room surface size: " << sizeof(room->surfaces) << endl;
+//}
 //
 //Surface::Surface()
 //{
@@ -285,148 +325,205 @@ void Surface::setRoom(vector<Room> rs)
 //}
 
 
-//
-//class Occupant
-//{
-//public:
-//    Occupant();
-//    Occupant(vector<string> vec);
-//    ~Occupant();
-//    Room room;
-//    string room_id;
-//    void setRoom(Room r);
-//
-//    void setRoom(Room r)
-//    {
-//        room = r;
-//    }
-//
-//};
-//
-//Occupant::Occupant()
-//{
-//
-//}
-//
-//Occupant::Occupant(vector<string> vec)
-//{
-//
-//}
-//
-//Occupant::~Occupant()
-//{
-//
-//}
-//
-//class Infiltration
-//{
-//
-//};
-//
-//class Furniture
-//{
-//public:
-//    Furniture();
-//    Furniture(vector<string> vec);
-//    ~Furniture();
-//
-//};
-//
-//Furniture::Furniture()
-//{
-//
-//}
-//
-//Furniture::Furniture(vector<string> vec)
-//{
-//
-//}
-//
-//Furniture::~Furniture()
-//{
-//
-//}
-//
-//class AHU
-//{
-//
-//};
-//
-//class AirCleaner
-//{
-//
-//};
-//
-//class Pollutant
-//{
-//
-//};
-//
-//class Reaction
-//{
-//
-//};
-//
-//class SurfaceReaction : public Reaction
-//{
-//
-//};
-//
-//class GaseousReaction : public Reaction
-//{
-//
-//};
-//
-//class Schedule
-//{
-//
-//};
-//
-//class Facility
-//{
-//
-//};
 
-class IndoorChemModel
+Occupant::Occupant()
 {
-public:
-    IndoorChemModel(string filename);
-    ~IndoorChemModel();
-    string name;
-    string solver;
-    string version;
-    string type;
-    string time;
-    vector<Room> rooms;
-    vector<Surface> surfaces;
-    //vector<Occupant> occupants;
-    //vector<Furniture> furnitures;
-    //vector<Facility> facilities;
-    //vector<AHU> ahus;
-    //vector<AirCleaner> aircleaners;
-    //vector<Pollutant> pollutants;
-    //vector<Reaction> reactions;
-    int runPeriod[6] = {};
-    int runDays;
-    int runSteps;
-    int secondsPerStep;
-    void run();
-private:
-    int indexProject;
-    int indexRunPeriod;
-    vector<int> indicesRoom;
-    vector<int> indicesSurface;
-    vector<int> indicesOccupant;
-    vector<int> indicesFurniture;
-    vector<int> indicesFacility;
-    vector<int> indicesAHU;
-    vector<int> indicesAirCleaner;
-    vector<int> indicesPollutant;
-    vector<int> indicesReaction;
-    int numPollutant;
 
-    void parseInput(vector<string> inputs);
+}
+
+Occupant::Occupant(vector<string> vec)
+{
+    name = vec[0];
+    id = vec[1];
+    room_id = vec[2];
+    group = vec[3];
+    clothing = vec[4];
+    activity = vec[5];
+    material_name = vec[6];
+    airflow = stod(vec[7]);
+}
+
+Occupant::~Occupant()
+{
+
+}
+
+class Infiltration
+{
+
 };
+
+
+
+Furniture::Furniture()
+{
+
+}
+
+Furniture::Furniture(vector<string> vec)
+{
+
+    name = vec[0];
+    id = vec[1];
+    room_id = vec[2];
+    angle = stod(vec[3]);
+    area = stod(vec[4]);
+    material_name = vec[5];
+    temperature = stod(vec[6]);
+    airflow = stod(vec[7]);
+
+}
+
+Furniture::~Furniture()
+{
+
+}
+
+AHU::AHU()
+{
+
+}
+
+AHU::AHU(vector<string> vec)
+{
+    int num_pol = (vec.size() - 5) / 3;
+    name = vec[0];
+    id = vec[1];
+    room_id = vec[2];
+    airflow = stod(vec[3]);
+    schedule_name = vec[vec.size() - 1];
+    cout << "before loop of AHU" << endl;
+    for (int i = 0; i < num_pol; i++)
+    {
+        if (vec[4 + i] == "" or vec[4 + i].size() == 0)
+        {
+            SPREs.push_back(0);
+        }
+        else
+        {
+            SPREs.push_back(stod(vec[4 + i]));
+        }
+
+        if (vec[4 + i + num_pol] == "" or vec[4 + i + num_pol].size() == 0)
+        {
+            CADRs.push_back(0);
+        }
+        else
+        {
+            CADRs.push_back(stod(vec[4 + i + num_pol]));
+        }
+
+        if (vec[4 + i + num_pol * 2] == "" or vec[4 + i + num_pol * 2].size() == 0)
+        {
+            emissions.push_back(0);
+        }
+        else
+        {
+            emissions.push_back(stod(vec[4 + i + num_pol * 2]));
+        }        
+    }
+}
+
+AHU::~AHU()
+{
+
+}
+
+AirCleaner::AirCleaner()
+{
+
+}
+
+AirCleaner::AirCleaner(vector<string> vec)
+{
+    int num_pol = (vec.size() - 5) / 3;
+    name = vec[0];
+    id = vec[1];
+    room_id = vec[2];
+    airflow = stod(vec[3]);
+    schedule_name = vec[vec.size() - 1];
+    for (int i = 0; i < num_pol; i++)
+    {
+        if (vec[4 + i] == "" or vec[4 + i].size() == 0)
+        {
+            SPREs.push_back(0);
+        }
+        else
+        {
+            SPREs.push_back(stod(vec[4 + i]));
+        }
+
+        if (vec[4 + i + num_pol] == "" or vec[4 + i + num_pol].size() == 0)
+        {
+            CADRs.push_back(0);
+        }
+        else
+        {
+            CADRs.push_back(stod(vec[4 + i + num_pol]));
+        }
+
+        if (vec[4 + i + num_pol * 2] == "" or vec[4 + i + num_pol * 2].size() == 0)
+        {
+            emissions.push_back(0);
+        }
+        else
+        {
+            emissions.push_back(stod(vec[4 + i + num_pol * 2]));
+        }
+    }
+}
+
+AirCleaner::~AirCleaner()
+{
+
+}
+
+Pollutant::Pollutant()
+{
+
+}
+
+Pollutant::Pollutant(string p)
+{
+    name = p;
+}
+
+Pollutant::Pollutant(vector<string> vec)
+{
+
+}
+
+Pollutant::~Pollutant()
+{
+
+}
+
+/*class Reaction
+{
+
+};
+
+class SurfaceReaction : public Reaction
+{
+
+};
+
+class GaseousReaction : public Reaction
+{
+
+};
+
+class Schedule
+{
+
+};
+
+class Facility
+{
+
+}*/;
+
+
 
 IndoorChemModel::IndoorChemModel(string filename)
 {
@@ -435,6 +532,7 @@ IndoorChemModel::IndoorChemModel(string filename)
     ifstream file;
     vector<string> inputLines;
     inputLines.clear();
+    inputs_original.clear();
     //filename = "C:/Users/Jialei Shen/Desktop/test.icp";
     file.open(filename.c_str());
     if (file.is_open())
@@ -450,7 +548,7 @@ IndoorChemModel::IndoorChemModel(string filename)
             }
             else
             {
-
+                inputs_original.push_back(lineClean);
                 inputLines.push_back(process::remove_delimiter(lineClean));
             }
 
@@ -510,10 +608,20 @@ void IndoorChemModel::parseInput(vector<string> inputs)
                 vec.push_back(inputs[indicesRoom[i] + j]);
             }
             Room room(vec);
+            cout << vec.size() << endl;
+            cout << "Original room address: " << &room << endl;
             numPollutant = stoi(vec[9]);
+            //rooms[i] = &room;
             rooms.push_back(room);
+            cout << "Vector room address: " << &rooms[i] << endl;
+            cout << "Room id: " << rooms[i].id << endl;
         }
     }
+
+    cout << "Room size: " << rooms.size() << endl;
+    cout << "Room [0] id: " << rooms[0].id << endl;
+    cout << &rooms[0] << endl;
+
 
     // import surface
     indicesSurface = process::get_indices(inputs, "Surface");
@@ -525,8 +633,12 @@ void IndoorChemModel::parseInput(vector<string> inputs)
             vec.push_back(inputs[indicesSurface[i] + j]);
         }
         Surface surface(vec);
+        cout << "Original surface address: " << &surface << endl;
         //surface.setRoom(rooms);
+        //surfaces[i] = &surface;
         surfaces.push_back(surface);
+        cout << "Vector surface address: " << &surfaces[i] << endl;
+        cout << "Vector [0] surface address: " << &surfaces[0] << endl;
     }
 
     /*for (int i = 0; i < rooms.size(); i++)
@@ -534,33 +646,92 @@ void IndoorChemModel::parseInput(vector<string> inputs)
         rooms[i].setSurface(surfaces);
     }*/
 
-    //// import occupant
-    //indicesOccupant = process::get_indices(inputs, "Occupant");
-    //for (int i = 0; i < indicesOccupant.size(); i++)
-    //{
-    //    vector<string> vec;
-    //    for (int j = 1; j < 5; j++)
-    //    {
-    //        vec.push_back(inputs[indicesOccupant[i] + j]);
-    //    }
-    //    Occupant occupant(vec);
-    //    occupants.push_back(occupant);
-    //}
+    // import occupant
+    indicesOccupant = process::get_indices(inputs, "Occupant");
+    for (int i = 0; i < indicesOccupant.size(); i++)
+    {
+        vector<string> vec;
+        for (int j = 1; j < 9; j++)
+        {
+            vec.push_back(inputs[indicesOccupant[i] + j]);
+        }
+        Occupant occupant(vec);
+        occupants.push_back(occupant);
+    }
+    cout << "Occupant done" << endl;
 
-    //// import furniture
-    //indicesFurniture = process::get_indices(inputs, "Furniture");
-    //for (int i = 0; i < indicesFurniture.size(); i++)
-    //{
-    //    vector<string> vec;
-    //    for (int j = 1; j < 9; j++)
-    //    {
-    //        vec.push_back(inputs[indicesFurniture[i] + j]);
-    //    }
-    //    Furniture furniture(vec);
-    //    furnitures.push_back(furniture);
-    //}
+    // import furniture
+    indicesFurniture = process::get_indices(inputs, "Furniture");
+    for (int i = 0; i < indicesFurniture.size(); i++)
+    {
+        vector<string> vec;
+        for (int j = 1; j < 9; j++)
+        {
+            vec.push_back(inputs[indicesFurniture[i] + j]);
+        }
+        Furniture furniture(vec);
+        furnitures.push_back(furniture);
+    }
+    cout << "Furniture done" << endl;
 
 
+    // import POC
+    indicesPollutant = process::get_indices(inputs, "POC");
+    for (int i = 0; i < indicesPollutant.size(); i++)
+    {
+        vector<string> vec;
+        bool finished = false;
+        int j = 1;
+        while (!finished)
+        {
+            string p = inputs[indicesPollutant[i] + j];
+            //vec.push_back(inputs[indicesPollutant[i] + j]);
+            Pollutant pollutant(p);
+            pollutants.push_back(pollutant);
+            if (process::ends_with(inputs_original[indicesPollutant[i] + j], ";"))
+            {
+                finished = true;
+            }
+            j += 1;
+        }
+        /*Pollutant pollutant(vec);
+        pollutants.push_back(pollutant);*/
+        pollutant_num = pollutants.size();
+    }
+    cout << "POC done" << endl;
+
+    
+    cout << pollutant_num << endl;
+
+    // import AHU
+    indicesAHU = process::get_indices(inputs, "AHU");
+    for (int i = 0; i < indicesAHU.size(); i++)
+    {
+        vector<string> vec;
+        for (int j = 1; j < 6 + 3 * pollutant_num; j++)
+        {
+            vec.push_back(inputs[indicesAHU[i] + j]);
+        }
+        cout << "AHU vec created" << endl;
+        cout << vec.size() << endl;
+        AHU ahu(vec);
+        ahus.push_back(ahu);
+    }
+    cout << "AHU done" << endl;
+
+    // import AirCleaner
+    indicesAirCleaner = process::get_indices(inputs, "AirCleaner");
+    for (int i = 0; i < indicesAirCleaner.size(); i++)
+    {
+        vector<string> vec;
+        for (int j = 1; j < 6 + 3 * pollutant_num; j++)
+        {
+            vec.push_back(inputs[indicesAirCleaner[i] + j]);
+        }
+        AirCleaner aircleaner(vec);
+        aircleaners.push_back(aircleaner);
+    }
+    cout << "AirCleaner done" << endl;
 
     cout << "Parsing done!" << endl;
 }
@@ -573,7 +744,18 @@ void IndoorChemModel::run()
     cout << "Time: " << time << endl;
     cout << "Days: " << runDays << endl;
     cout << "Seconds per step: " << secondsPerStep << endl;
-    cout << surfaces[0].id << endl;
+    cout << rooms[0].id << endl;
+    cout << surfaces[3].id << endl;
+    cout << &rooms[0] << endl;
+    cout << "Surface address: " << endl;
+    cout << &surfaces[0] << endl;
+    cout << &surfaces[1] << endl;
+    cout << &surfaces[2] << endl;
+    cout << &surfaces[3] << endl;
+    cout << occupants[0].activity << endl;
+    /*cout << surfaces[3]->room->name << endl;
+    cout << rooms[0]->surfaces << endl;
+    cout << rooms[0]->surfaces[3]->name << endl;*/
 }
 
 
